@@ -1,30 +1,35 @@
+import mongoose from "mongoose"
 import express from "express"
 import dotenv from "dotenv"
-import mongoose from "mongoose"
+import pRouter from "./Router/pRouter.js"
 import morgan from "morgan"
-import chalk from "chalk"
-import ProductRoutes from "./Routes/ProductRoutes.js"
 
-dotenv.config({"path":"./config/config.env"})
 
+
+
+
+dotenv.config({"path":"./setting/config.env"})
 let port = process.env.PORT
 let host = process.env.HOST
-let DB_URL = process.env.LOCAL_DB_URL
+let db_url = process.env.DB_URL
+
 const app = express()
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(morgan("tiny"))
 
 app.get("/",(req,resp)=>{
-    resp.send("this is my root request part")
+    resp.send("<h1>root req succesfully come here </h1>")
 })
 
-app.use("/products",ProductRoutes)
+app.use("/products",pRouter)
 
-mongoose.connect(DB_URL)
-.then((response)=>{console.log("database connected successfully");})
-.catch((err)=>{console.log(err)
-    process.exit(1);})
 
+mongoose.connect(db_url)
+.then((resp)=>{console.log("database connected successfully");})
+.catch((err)=>{console.log(err);})
 
 app.listen(port,host,(err)=>{
     if(err) throw err
-    console.log(chalk.blue(`server Running successfully : http://${host}:${port}`));
+    console.log(`server running : http://${host}:${port}`);
 })

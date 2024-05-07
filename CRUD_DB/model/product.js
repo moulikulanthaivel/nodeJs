@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-let ProductSchema = mongoose.Schema({
+let productSchema = mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -13,7 +13,7 @@ let ProductSchema = mongoose.Schema({
         type:Number,
         required:true
     },
-    information:{
+    info:{
         type:String,
         required:true
     },
@@ -23,11 +23,9 @@ let ProductSchema = mongoose.Schema({
     },
     created:{
         type:Date,
-        default:Date.now
+       default:Date.now
     }
-    
-
 })
-let ProductModel = mongoose.model("products", ProductSchema)
 
-export default ProductModel
+let product = mongoose.model("product", productSchema)
+export default product
